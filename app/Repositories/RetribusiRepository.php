@@ -39,7 +39,7 @@ class RetribusiRepository extends Controller implements RetribusiInterface
 
         $retribusiQuery = $this->model
         ->select('tanggal', 'data_pasar_id', 'bagian_id', 'jumlah')
-        ->with('data_pasar:id,nama_pasar', 'bagian:id,nama_bagian')
+        ->with('data_pasar:id,nama_pedagang', 'bagian:id,nama_bagian')
         ->where('data_pasar_id', $pasarr)
         ->where('bagian_id', $bagiann)
         ->whereBetween('tanggal', [$start_date, $end_date])
@@ -49,11 +49,11 @@ class RetribusiRepository extends Controller implements RetribusiInterface
 
       
 
-        $namaPasar = Retribusi::select('data_pasar.nama_pasar')
-        ->join('data_pasar', 'retribusi.data_pasar_id', '=', 'data_pasar.id')
+        $namaPasar = Retribusi::select('pedagang.nama_pedagang')
+        ->join('pedagang', 'retribusi.data_pasar_id', '=', 'pedagang.id')
         ->where('retribusi.data_pasar_id', $pasarr)
         ->distinct('retribusi.data_pasar_id')
-        ->pluck('nama_pasar')
+        ->pluck('nama_pedagang')
         ->first();
 
         $namaBagian = Retribusi::select('bagian.nama_bagian')
@@ -65,7 +65,7 @@ class RetribusiRepository extends Controller implements RetribusiInterface
 
         $results = $this->model
         ->select('tanggal', 'data_pasar_id', 'bagian_id', 'jumlah')
-        ->with('data_pasar:id,nama_pasar', 'bagian:id,nama_bagian')
+        ->with('data_pasar:id,nama_pedagang', 'bagian:id,nama_bagian')
         ->where('data_pasar_id', $pasarr)
         ->where('bagian_id', $bagiann)
         ->whereBetween('tanggal', [$awalTahun, $end_date])
@@ -73,7 +73,7 @@ class RetribusiRepository extends Controller implements RetribusiInterface
 
         $resultss = $this->model
         ->select('tanggal', 'data_pasar_id', 'bagian_id', 'jumlah')
-        ->with('data_pasar:id,nama_pasar', 'bagian:id,nama_bagian')
+        ->with('data_pasar:id,nama_pedagang', 'bagian:id,nama_bagian')
         ->where('data_pasar_id', $pasarr)
         ->where('bagian_id', $bagiann)
         ->whereMonth('tanggal', $bulanSb)

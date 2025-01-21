@@ -26,7 +26,7 @@ class RetribusiKelolaController extends Controller
 
     public function index(): View|JsonResponse
     {
-        $retribusi = Retribusi::with('data_pasar:id,nama_pasar', 'bagian:id,nama_bagian')
+        $retribusi = Retribusi::with('data_pasar:id,nama_pedagang', 'bagian:id,nama_bagian')
             ->select('id','tanggal','data_pasar_id','bagian_id','jumlah')
             ->get();
 
@@ -34,7 +34,7 @@ class RetribusiKelolaController extends Controller
             return datatables()->of($retribusi)
                 ->addIndexColumn()
                 ->addColumn('tanggal', fn ($model) => date('d-m-Y', strtotime($model->tanggal)))
-                ->addColumn('data_pasar_id', fn ($model) => $model->data_pasar->nama_pasar )
+                ->addColumn('data_pasar_id', fn ($model) => $model->data_pasar->nama_pedagang )
                 ->addColumn('bagian_id', fn ($model) => $model->bagian->nama_bagian)
                 ->addColumn('jumlah', fn ($model) => indonesianCurrency($model->jumlah))                
                 ->addColumn('bagian_id', 'menu.kelolaretribusi.datatable.bagian')
@@ -43,7 +43,7 @@ class RetribusiKelolaController extends Controller
                 ->toJson();
         }
 
-        $dataPasar = DataPasar::select('id', 'nama_pasar')->orderBy('nama_pasar')->get();
+        $dataPasar = DataPasar::select('id', 'nama_pedagang')->orderBy('nama_pedagang')->get();
         $bagian = Bagian::select('id', 'nama_bagian')->orderBy('nama_bagian')->get();
 
         $ctRet = indonesianCurrency($this->retribusiRepository->sumJumlah());

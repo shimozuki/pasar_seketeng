@@ -14,8 +14,8 @@ class csvImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
-        $namaPasar = $row['nama_pasar'];
-        $dataPasar = DataPasar::where('nama_pasar', $namaPasar)->first();
+        $namaPasar = $row['nama_pedagang'];
+        $dataPasar = DataPasar::where('nama_pedagang', $namaPasar)->first();
         $namaBagian = $row['nama_bagian'];
         $bagian = Bagian::where('nama_bagian', $namaBagian)->first();
 

@@ -19,6 +19,7 @@
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Nama</th>
+						<th scope="col">Jenis Dagangan</th>
 						<th scope="col">Aksi</th>
 					</tr>
 				</thead>

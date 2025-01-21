@@ -13,7 +13,7 @@
 									
 									@foreach($dataPasar as $dataPasare)
 									<option value="{{ $dataPasare->id }}" >
-										Pasar {{ $dataPasare->nama_pasar }}
+										Pasar {{ $dataPasare->nama_pedagang }}
 									</option>
 									@endforeach
 								</select>
@@ -177,7 +177,7 @@
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Tanggal</th>
-							<th scope="col">Nama Pasar</th>
+							<th scope="col">Nama Pedagang</th>
 							<th scope="col">Bagian</th>
 							<th scope="col">Jumlah Retribusi</th>
 						</tr>
@@ -187,7 +187,7 @@
 						<tr>
 							<th>{{ $loop->iteration }}</th>
 							<td>{{ date('d-m-Y', strtotime($retribusi->tanggal)) }}</td>
-							<td>{{ $retribusi->data_pasar->nama_pasar }}</td>
+							<td>{{ $retribusi->data_pasar->nama_pedagang }}</td>
 							<td>{{ $retribusi->bagian->nama_bagian }}</td>
 							<td>{{ indonesianCurrency($retribusi->jumlah) }}</td>
 						</tr>
@@ -259,7 +259,7 @@
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Tanggal</th>
-						<th scope="col">Nama Pasar</th>
+						<th scope="col">Nama Lapak</th>
 						<th scope="col">Bagian</th>
 						<th scope="col">Jumlah Retribusi</th>
 					</tr>

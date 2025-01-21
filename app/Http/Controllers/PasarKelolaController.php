@@ -14,7 +14,7 @@ class PasarKelolaController extends Controller
     
     public function index(): View|JsonResponse
     {
-        $pasar = DataPasar::select('id', 'nama_pasar')->orderBy('nama_pasar')->get();
+        $pasar = DataPasar::select('id', 'nama_pedagang', 'jenis_dagangan')->orderBy('nama_pedagang')->get();
 
         if (request()->ajax()) {
             return datatables()->of($pasar)

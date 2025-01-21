@@ -9,7 +9,7 @@
 			columns: [
 				{ data: 'DT_RowIndex', name: 'DT_RowIndex' },
 				{ data: 'tanggal', name: 'tanggal' },
-                { data: 'data_pasar_id', name: 'data_pasar.nama_pasar' },
+                { data: 'data_pasar_id', name: 'pedagang.nama_pedagang' },
                 { data: 'bagian_id', name: 'bagian.nama_bagian' },
                 { data: 'jumlah', name: 'jumlah' },
 				{ data: 'action', name: 'action' }

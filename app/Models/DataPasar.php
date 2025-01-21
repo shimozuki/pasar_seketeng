@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DataPasar extends Model
 {
     use HasFactory;
-    protected $table = 'data_pasar';
-    protected $fillable = ['nama_pasar'];
+    protected $table = 'pedagang';
+    protected $fillable = ['nama_pedagang','jenis_dagangan'];
 
     public function retribusi(): HasMany
     {

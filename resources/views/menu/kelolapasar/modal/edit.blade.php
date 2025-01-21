@@ -12,8 +12,8 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="mb-3">
-								<label for="nama_pasar" class="form-label">Nama Pedagang</label>
-								<input type="text" class="form-control" name="nama_pasar" id="nama_pasar" placeholder="Masukkan nama pasar.."
+								<label for="nama_pedagang" class="form-label">Nama Pedagang</label>
+								<input type="text" class="form-control" name="nama_pedagang" id="nama_pedagang" placeholder="Masukkan nama lapak.."
 									required>
 							</div>
 						</div>

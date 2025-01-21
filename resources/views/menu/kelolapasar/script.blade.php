@@ -8,7 +8,8 @@
 			ajax: "{{ route('pasar.index') }}",
 			columns: [
 				{ data: 'DT_RowIndex', name: 'DT_RowIndex' },
-				{ data: 'nama_pasar', name: 'nama_pasar' },
+				{ data: 'nama_pedagang', name: 'nama_pedagang' },
+				{ data: 'jenis_dagangan', name: 'jenis_dagangan' },
 				{ data: 'action', name: 'action' },
 			]
 		});
@@ -41,7 +42,7 @@
 					editPasarModalEveryInput.prop('disabled', false);
 
 					$('#editPasarModal #edit-pasar-form').attr('action', formActionURL);
-					$('#editPasarModal #nama_pasar').val(response.data.nama_pasar);
+					$('#editPasarModal #nama_pedagang').val(response.data.nama_pedagang);
 				}
 			});
 		});

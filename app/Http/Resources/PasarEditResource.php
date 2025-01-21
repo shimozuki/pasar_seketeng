@@ -10,7 +10,7 @@ class PasarEditResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nama_pasar' => $this->nama_pasar
+            'nama_pedagang' => $this->nama_pedagang
         ];
     }
 }

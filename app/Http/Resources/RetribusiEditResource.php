@@ -16,7 +16,7 @@ class RetribusiEditResource extends JsonResource
            
             'data_pasar' => [
                 'id' => $this->data_pasar->id,
-                'nama_pasar' => $this->data_pasar->nama_pasar
+                'nama_pedagang' => $this->data_pasar->nama_pedagang
             ],
             'bagian' => [
                 'id' => $this->bagian->id,

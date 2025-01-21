@@ -15,16 +15,17 @@ class PasarStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_pasar' => 'required|min:3|max:191'
+            'nama_pedagang' => 'required|min:3|max:191',
+            'jenis_dagangan' => 'required|string|max:255',
         ];
     }
 
     public function messages()
     {
         return [
-            'nama_pasar.required' => 'Kolom nama wajib diisi!',
-            'nama_pasar.min' => 'Kolom nama minimal 3 karakter!',
-            'nama_pasar.max' => 'Kolom nama maksimal 191 karakter!'
+            'nama_pedagang.required' => 'Kolom nama wajib diisi!',
+            'nama_pedagang.min' => 'Kolom nama minimal 3 karakter!',
+            'nama_pedagang.max' => 'Kolom nama maksimal 191 karakter!'
         ];
     }
 }

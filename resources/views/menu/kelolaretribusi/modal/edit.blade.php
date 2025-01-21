@@ -25,7 +25,7 @@
 								<select class="form-select" name="data_pasar_id" id="data_pasar_id">
 									
 									@foreach($dataPasar as $dataPasare)
-									<option value="{{ $dataPasare->id }}">{{ $dataPasare->nama_pasar }}</option>
+									<option value="{{ $dataPasare->id }}">{{ $dataPasare->nama_pedagang }}</option>
 									@endforeach
 								</select>
 							</div>
