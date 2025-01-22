@@ -64,13 +64,11 @@ class RetribusiKelolaController extends Controller
         
         $formattedDate = Carbon::createFromFormat('Y-m-d', $request->tanggal)->format('Y-m-d');
 
-        $jumlah = $request->status === 'nunggak' ? 0 : $request->jumlah;
-
             Retribusi::create([
                 'tanggal' => $formattedDate,
                 'data_pasar_id' => $request->data_pasar_id,
                 'bagian_id' => $request->bagian_id,
-                'jumlah' => $jumlah,
+                'jumlah' => $request->jumlah,
                 'status' => $request->status
             ]);
 

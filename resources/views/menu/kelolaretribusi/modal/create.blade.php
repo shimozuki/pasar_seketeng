@@ -103,7 +103,7 @@
     </div>  
 </div>  
   
-<script>  
+{{-- <script>  
     document.addEventListener('DOMContentLoaded', function() {  
         const statusSelect = document.getElementById('status');  
         const jumlahRow = document.getElementById('jumlahRow');  
@@ -119,4 +119,4 @@
         statusSelect.addEventListener('change', toggleJumlahRow);  
         toggleJumlahRow();  
     });  
-</script>  
+</script>   --}}
