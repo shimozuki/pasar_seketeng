@@ -47,7 +47,8 @@ class RetribusiRepository extends Controller implements RetribusiInterface
 
         $retribusi = $retribusiQuery->get();
 
-      
+        $totalNunggak = $retribusi->where('status', 'Nunggak')->sum('jumlah');
+        $totalLunas = $retribusi->where('status', 'Lunas')->sum('jumlah'); 
 
         $namaPasar = Retribusi::select('pedagang.nama_pedagang')
         ->join('pedagang', 'retribusi.data_pasar_id', '=', 'pedagang.id')
@@ -95,6 +96,8 @@ class RetribusiRepository extends Controller implements RetribusiInterface
         $filteredResult['end_date'] = date('Y-m-d', strtotime($end_date));
         $filteredResult['namaPasar'] = $namaPasar;
         $filteredResult['namaBagian'] = $namaBagian;
+        $filteredResult['totalNunggak'] = $totalNunggak;  
+        $filteredResult['totalLunas'] = $totalLunas;
     
         return $filteredResult;
     }
