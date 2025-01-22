@@ -47,8 +47,8 @@ class RetribusiRepository extends Controller implements RetribusiInterface
 
         $retribusi = $retribusiQuery->get();
 
-        $totalNunggak = $retribusi->where('status', 'Nunggak')->sum('jumlah');
-        $totalLunas = $retribusi->where('status', 'Lunas')->sum('jumlah'); 
+        $totalNunggak = Retribusi::where('status', 'Nunggak')->sum('jumlah');
+        $totalLunas = Retribusi::where('status', 'Lunas')->sum('jumlah'); 
 
         $namaPasar = Retribusi::select('pedagang.nama_pedagang')
         ->join('pedagang', 'retribusi.data_pasar_id', '=', 'pedagang.id')
