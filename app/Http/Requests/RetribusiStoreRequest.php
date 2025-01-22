@@ -17,7 +17,7 @@ class RetribusiStoreRequest extends FormRequest
             'tanggal' => ['required'],
             'data_pasar_id' => ['required'],
             'bagian_id' => ['required'],
-            'jumlah' => ['required']
+            'status' => ['required']
         ];
     }
 
@@ -30,7 +30,7 @@ class RetribusiStoreRequest extends FormRequest
 
             'bagian_id.required' => 'Kolom bagian wajib diisi!',
 
-            'jumlah.required' => 'Kolom jumlah wajib diisi!'
+            'status' => 'Status Wajib Diisi!'
             
         ];
     }

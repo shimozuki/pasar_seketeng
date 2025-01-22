@@ -13,7 +13,7 @@ class RetribusiController extends Controller implements APIInterface
 {
     public function edit(int $id): JsonResponse
     {
-        $retribusi = new RetribusiEditResource(Retribusi::with('data_pasar:id,nama_pasar', 'bagian:id,nama_bagian')->findOrFail($id));
+        $retribusi = new RetribusiEditResource(Retribusi::with('data_pasar:id,nama_pedagang,jenis_dagangan', 'bagian:id,nama_bagian')->findOrFail($id));
 
         return response()->json([
             'code' => Response::HTTP_OK,

@@ -27,7 +27,7 @@ class RetribusiKelolaController extends Controller
     public function index(): View|JsonResponse
     {
         $retribusi = Retribusi::with('data_pasar:id,nama_pedagang', 'bagian:id,nama_bagian')
-            ->select('id','tanggal','data_pasar_id','bagian_id','jumlah')
+            ->select('id','tanggal','data_pasar_id','bagian_id','jumlah', 'status')
             ->get();
 
         if (request()->ajax()) {
@@ -64,11 +64,14 @@ class RetribusiKelolaController extends Controller
         
         $formattedDate = Carbon::createFromFormat('Y-m-d', $request->tanggal)->format('Y-m-d');
 
+        $jumlah = $request->status === 'nunggak' ? 0 : $request->jumlah;
+
             Retribusi::create([
                 'tanggal' => $formattedDate,
                 'data_pasar_id' => $request->data_pasar_id,
                 'bagian_id' => $request->bagian_id,
-                'jumlah' => $request->jumlah
+                'jumlah' => $jumlah,
+                'status' => $request->status
             ]);
 
         return redirect()->route('retribusis.index')->with('success', 'Data berhasil ditambahkan!');

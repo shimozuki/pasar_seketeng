@@ -15,7 +15,8 @@ class PasarUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_pedagang' => 'required|min:3|max:191'
+            'nama_pedagang' => 'required|min:3|max:191',
+            'jenis_dagangan' => 'required|string|max:255',
         ];
     }
 

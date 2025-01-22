@@ -43,6 +43,7 @@
 
 					$('#editPasarModal #edit-pasar-form').attr('action', formActionURL);
 					$('#editPasarModal #nama_pedagang').val(response.data.nama_pedagang);
+					$('#editPasarModal #jenis_dagangan').val(response.data.jenis_dagangan);
 				}
 			});
 		});

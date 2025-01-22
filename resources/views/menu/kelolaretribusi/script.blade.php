@@ -12,6 +12,7 @@
                 { data: 'data_pasar_id', name: 'pedagang.nama_pedagang' },
                 { data: 'bagian_id', name: 'bagian.nama_bagian' },
                 { data: 'jumlah', name: 'jumlah' },
+				{ data: 'status', name: 'status' },
 				{ data: 'action', name: 'action' }
 			]
 		});
@@ -47,6 +48,7 @@
 					$('#editRetribusiModal #data_pasar_id').val(response.data.data_pasar_id).select2();
 					$('#editRetribusiModal #bagian_id').val(response.data.bagian_id).select2();
 					$('#editRetribusiModal #jumlah').val(response.data.jumlah);
+					
 					$('#editRetribusiModal #edit-retribusi-form').attr('action', formActionURL)
 				}
 			});

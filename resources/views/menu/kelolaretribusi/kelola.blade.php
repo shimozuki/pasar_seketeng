@@ -31,6 +31,7 @@
 						<th scope="col">Pasar</th>
 						<th scope="col">Bagian</th>
 						<th scope="col">Jumlah Retribusi</th>
+						<th scope="col">Status</th>
 						<th scope="col">Aksi</th>
 					</tr>
 				</thead>

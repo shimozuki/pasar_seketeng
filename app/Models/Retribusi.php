@@ -14,7 +14,7 @@ class Retribusi extends Model
     use HasFactory;
 
     protected $table = 'retribusi';
-    protected $fillable = ['tanggal', 'data_pasar_id', 'bagian_id', 'jumlah'];
+    protected $fillable = ['tanggal', 'data_pasar_id', 'bagian_id', 'jumlah', 'status'];
 
 
     public function data_pasar(): BelongsTo

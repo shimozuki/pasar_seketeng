@@ -17,7 +17,8 @@ class RetribusiUpdateRequest extends FormRequest
             'tanggal' => ['required'],
             'data_pasar_id' => ['required'],
             'bagian_id' => ['required'],
-            'jumlah' => ['required']
+            'jumlah' => ['required'],
+            'status' => ['required']
         ];
     }
 
