@@ -26,7 +26,7 @@ class RetribusiFilterController extends Controller
     public function __invoke(): View|RedirectResponse
     {
         
-        $dataPasar = DataPasar::select('id', 'nama_pedagang')->orderBy('nama_pedagang')->get();
+        $dataPasar = DataPasar::select('id', 'nama_pedagang')->where('status', '!=', 'Nunggak')->orderBy('nama_pedagang')->get();
         $bagian = Bagian::select('id', 'nama_bagian')->orderBy('nama_bagian')->get();
         $filteredResult = [];
 

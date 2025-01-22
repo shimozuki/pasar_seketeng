@@ -13,7 +13,7 @@
 									
 									@foreach($dataPasar as $dataPasare)
 									<option value="{{ $dataPasare->id }}" >
-										Pasar {{ $dataPasare->nama_pedagang }}
+										 {{ $dataPasare->nama_pedagang }}
 									</option>
 									@endforeach
 								</select>
