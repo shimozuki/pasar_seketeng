@@ -18,7 +18,7 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                @if(auth()->user()->isAdmin())
+                @if(auth()->user()->isAdmin() || auth()->user()->role_id == 'petugas')
 
                 <li class="sidebar-item {{ request()->routeIs('pengguna.*') ? 'active' : '' }}">
                     <a href="{{ route('pengguna.index') }}" class='sidebar-link'>

@@ -16,22 +16,35 @@ class PenggunaKelolaController extends Controller
 
     public function index(): View|JsonResponse
     {
-        $users = User::with('roles:id,role_name')
-        ->select('id', 'name', 'email', 'role_id')->orderBy('name')->get();
+        // Get the currently authenticated user  
+        $currentUser = auth()->user();
+
+        // Fetch users based on role  
+        $usersQuery = User::with('roles:id,role_name')
+            ->select('id', 'name', 'email', 'role_id')
+            ->orderBy('name');
+
+        // Check if the user's role is 'petugas'  
+        if ($currentUser->role_id == 'petugas') {
+            // If the user is 'petugas', filter to show only their own data  
+            $usersQuery->where('id', $currentUser->id);
+        }
+
+        $users = $usersQuery->get();
 
         if (request()->ajax()) {
             return datatables()->of($users)
                 ->addIndexColumn()
                 ->addColumn(
                     'role_id',
-                    fn ($model) => $model->roles->role_name
+                    fn($model) => $model->roles->role_name
                 )
                 ->addColumn('action', 'menu.pengguna.datatable.action')
                 ->toJson();
         }
 
         $roles = Role::select('id', 'role_name')->orderBy('role_name')->get();
-        
+
         return view('menu.pengguna.index', [
             'roles' => $roles
         ]);
@@ -50,7 +63,7 @@ class PenggunaKelolaController extends Controller
         return redirect()->route('pengguna.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
- 
+
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
         $user->update([
@@ -58,7 +71,7 @@ class PenggunaKelolaController extends Controller
             'email' => $request->email,
             'role_id' => $request->role_id
         ]);
-        
+
         return redirect()->route('pengguna.index')->with('success', 'Data berhasil diubah!');
     }
 
