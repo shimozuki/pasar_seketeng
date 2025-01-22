@@ -18,80 +18,80 @@ class LaporanRetribusiController extends Controller implements ExcelExportInterf
 {
     const FILE_NAME = 'laporan-retribusi';
 
-    public function __invoke()
-    {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $this->setExcelHeader($spreadsheet);
-
-        $bln = intval(request()->input('bln'));
-        $bgn = intval(request()->input('bgn'));
-        $sbl = $bln-1;
-
-        $results = DataPasar::join('retribusi as rb', 'pedagang.id', '=', 'rb.data_pasar_id')
-        ->join('bagian as bg', 'bg.id', '=', 'rb.bagian_id')
-        ->select(
-            'pedagang.nama_pedagang AS Pasar',
-            'bg.nama_bagian AS Bagian',
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 1), 0) AS tgl1'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 2), 0) AS tgl2'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 3), 0) AS tgl3'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 4), 0) AS tgl4'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 5), 0) AS tgl5'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 6), 0) AS tgl6'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 7), 0) AS tgl7'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 8), 0) AS tgl8'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 9), 0) AS tgl9'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 10), 0) AS tgl10'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 11), 0) AS tgl11'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 12), 0) AS tgl12'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 13), 0) AS tgl13'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 14), 0) AS tgl14'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 15), 0) AS tgl15'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 16), 0) AS tgl16'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 17), 0) AS tgl17'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 18), 0) AS tgl18'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 19), 0) AS tgl19'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 20), 0) AS tgl20'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 21), 0) AS tgl21'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 22), 0) AS tgl22'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 23), 0) AS tgl23'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 24), 0) AS tgl24'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 25), 0) AS tgl25'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 26), 0) AS tgl26'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 27), 0) AS tgl27'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 28), 0) AS tgl28'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 29), 0) AS tgl29'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 30), 0) AS tgl30'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.' AND DAY(k.tanggal) = 31), 0) AS tgl31'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.'), 0) AS Jumlah'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) >= 1 AND MONTH(k.tanggal) <= '.$bln.'), 0) AS Jumlah_sd_saat_ini'),
-            DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$sbl.'), 0) AS Jumlah_bulan_lalu'),
-            DB::raw('COALESCE((SELECT AVG(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = '.$bln.'), 0) AS Rerata'),
-            DB::raw("CASE
-                WHEN ".$bln." = 1 THEN 'Januari'
-                WHEN ".$bln." = 2 THEN 'Februari'
-                WHEN ".$bln." = 3 THEN 'Maret'
-                WHEN ".$bln." = 4 THEN 'April'
-                WHEN ".$bln." = 5 THEN 'Mei'
-                WHEN ".$bln." = 6 THEN 'Juni'
-                WHEN ".$bln." = 7 THEN 'Juli'
-                WHEN ".$bln." = 8 THEN 'Agustus'
-                WHEN ".$bln." = 9 THEN 'September'
-                WHEN ".$bln." = 10 THEN 'Oktober'
-                WHEN ".$bln." = 11 THEN 'November'
-                WHEN ".$bln." = 12 THEN 'Desember'
-                ELSE 'Tidak Valid'
-            END AS Bulan")
-        )
-        ->where('bg.id', '=', $bgn)
-        ->groupBy('pedagang.id', 'bg.id', 'pedagang.nama_pedagang', 'bg.nama_bagian', 'Bulan')
-        ->get();
-    
-
-
-        $this->setExcelContent($results, $sheet);
-
-        LaporanRepository::outputTheExcel($spreadsheet, self::FILE_NAME);
+    public function __invoke()  
+    {  
+        $spreadsheet = new Spreadsheet();  
+        $sheet = $this->setExcelHeader($spreadsheet);  
+  
+        $bln = intval(request()->input('bln'));  
+        $bgn = intval(request()->input('bgn'));  
+        $sbl = $bln - 1;  
+  
+        $results = DataPasar::join('retribusi as rb', 'pedagang.id', '=', 'rb.data_pasar_id')  
+            ->join('bagian as bg', 'bg.id', '=', 'rb.bagian_id')  
+            ->select(  
+                'pedagang.nama_pedagang AS Pasar',  
+                'bg.nama_bagian AS Bagian',  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 1), 0) AS tgl1'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 2), 0) AS tgl2'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 3), 0) AS tgl3'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 4), 0) AS tgl4'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 5), 0) AS tgl5'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 6), 0) AS tgl6'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 7), 0) AS tgl7'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 8), 0) AS tgl8'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 9), 0) AS tgl9'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 10), 0) AS tgl10'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 11), 0) AS tgl11'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 12), 0) AS tgl12'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 13), 0) AS tgl13'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 14), 0) AS tgl14'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 15), 0) AS tgl15'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 16), 0) AS tgl16'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 17), 0) AS tgl17'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 18), 0) AS tgl18'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 19), 0) AS tgl19'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 20), 0) AS tgl20'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 21), 0) AS tgl21'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 22), 0) AS tgl22'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 23), 0) AS tgl23'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 24), 0) AS tgl24'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 25), 0) AS tgl25'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 26), 0) AS tgl26'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 27), 0) AS tgl27'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 28), 0) AS tgl28'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 29), 0) AS tgl29'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 30), 0) AS tgl30'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND DAY(k.tanggal) = 31), 0) AS tgl31'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . '), 0) AS Jumlah'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) >= 1 AND MONTH(k.tanggal) <= ' . $bln . '), 0) AS Jumlah_sd_saat_ini'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $sbl . '), 0) AS Jumlah_bulan_lalu'),  
+                DB::raw('COALESCE((SELECT AVG(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . '), 0) AS Rerata'),  
+                DB::raw("CASE  
+                    WHEN " . $bln . " = 1 THEN 'Januari'  
+                    WHEN " . $bln . " = 2 THEN 'Februari'  
+                    WHEN " . $bln . " = 3 THEN 'Maret'  
+                    WHEN " . $bln . " = 4 THEN 'April'  
+                    WHEN " . $bln . " = 5 THEN 'Mei'  
+                    WHEN " . $bln . " = 6 THEN 'Juni'  
+                    WHEN " . $bln . " = 7 THEN 'Juli'  
+                    WHEN " . $bln . " = 8 THEN 'Agustus'  
+                    WHEN " . $bln . " = 9 THEN 'September'  
+                    WHEN " . $bln . " = 10 THEN 'Oktober'  
+                    WHEN " . $bln . " = 11 THEN 'November'  
+                    WHEN " . $bln . " = 12 THEN 'Desember'  
+                    ELSE 'Tidak Valid'  
+                END AS Bulan"),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND k.status = "lunas"), 0) AS Jumlah_Lunas'),  
+                DB::raw('COALESCE((SELECT SUM(k.jumlah) FROM retribusi k WHERE pedagang.id = k.data_pasar_id AND k.bagian_id = bg.id AND MONTH(k.tanggal) = ' . $bln . ' AND k.status = "nunggak"), 0) AS Jumlah_Nunggak')  
+            )  
+            ->where('bg.id', '=', $bgn)  
+            ->groupBy('pedagang.id', 'bg.id', 'pedagang.nama_pedagang', 'bg.nama_bagian', 'Bulan')  
+            ->get();  
+  
+        $this->setExcelContent($results, $sheet);  
+  
+        LaporanRepository::outputTheExcel($spreadsheet, self::FILE_NAME);  
     }
 
     public function setExcelHeader(Spreadsheet $spreadsheet): Worksheet
@@ -102,7 +102,7 @@ class LaporanRetribusiController extends Controller implements ExcelExportInterf
         $sheet->mergeCells('C1:C2');
         $sheet->mergeCells('D1:AH1');
         $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'UNIT PASAR');
+        $sheet->setCellValue('B1', 'PEDAGANG');
         $sheet->setCellValue('C1', 'BULAN LALU');
         $sheet->setCellValue('D1', 'TANGGAL');
         $sheet->setCellValue('D2', '1');
@@ -143,9 +143,11 @@ class LaporanRetribusiController extends Controller implements ExcelExportInterf
         $sheet->mergeCells('AM1:AM2');
         $sheet->setCellValue('AI1', 'bulan ini');
         $sheet->setCellValue('AJ1', 's/d bulan ini');
+        $sheet->setCellValue('AK1', 'Jumlah Lunas');
+        $sheet->setCellValue('AL1', 'Jumlah Nunggak');
 
 
-        foreach (range('A1', 'AJ1') as $paragraph) {
+        foreach (range('A1', 'AL1') as $paragraph) {
             $sheet->getColumnDimension($paragraph)->setAutoSize(true);
         }
 
@@ -192,9 +194,12 @@ class LaporanRetribusiController extends Controller implements ExcelExportInterf
             $sheet->setCellValue('AH' . $cell, $row->tgl31);
             $sheet->setCellValue('AI' . $cell, $row->Jumlah);
             $sheet->setCellValue('AJ' . $cell, $row->Jumlah_sd_saat_ini);
+            $sheet->setCellValue('AJ' . $cell, $row->Jumlah_sd_saat_ini);
+            $sheet->setCellValue('AK' . $cell, $row->Jumlah_Lunas);
+            $sheet->setCellValue('AL' . $cell, $row->Jumlah_Nunggak);
             $cell++;
-            $sheet->getStyle('A1:AJ' . ($cell - 1))->applyFromArray(LaporanRepository::setStyle());
-            $sheet->getStyle('A1:AJ2')->applyFromArray(LaporanRepository::setWarna());
+            $sheet->getStyle('A1:AL' . ($cell - 1))->applyFromArray(LaporanRepository::setStyle());
+            $sheet->getStyle('A1:AL2')->applyFromArray(LaporanRepository::setWarna());
 
         }
         return $sheet;
